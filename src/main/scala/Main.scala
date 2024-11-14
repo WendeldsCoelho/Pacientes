@@ -25,11 +25,16 @@ object Main extends App {
     .withColumnRenamed("Data de início", "dataInicio")
 
   // Chamando a análise da primeira questão
-  //questao1.run(dfRenomeado)
-  //questao2.run(dfRenomeado)
-  //questao3.run(dfRenomeado)
-  questao4.run(dfRenomeado)
-
+  // questao1.run(dfRenomeado)
+  // questao2.run(dfRenomeado)
+  // questao3.run(dfRenomeado)
+  // questao4.run(dfRenomeado)
+  // questao5.run(dfRenomeado)
+  // questao6.run(dfRenomeado)
+  // questao7.run(dfRenomeado)
+  // questao8.run(dfRenomeado)
+  // questao9.run(dfRenomeado)
+  // questao10.run(dfRenomeado)
 
   // Parando o SparkSession
   spark.stop()
