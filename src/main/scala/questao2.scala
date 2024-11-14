@@ -1,5 +1,7 @@
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
+import matplotlib.pyplot as plt
+import pandas as pd
 
 object questao2 {
   def run(dfRenomeado: DataFrame) : Unit = {
