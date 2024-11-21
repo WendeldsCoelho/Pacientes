@@ -155,6 +155,8 @@
     <orderEntry type="library" name="sbt: org.json4s:json4s-scalap_2.13:3.7.0-M11:jar" level="project" />
     <orderEntry type="library" name="sbt: org.lz4:lz4-java:1.8.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.objenesis:objenesis:2.5.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.plotly-scala:plotly-core_2.13:0.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.plotly-scala:plotly-render_2.13:0.8.4:jar" level="project" />
     <orderEntry type="library" name="sbt: org.roaringbitmap:RoaringBitmap:0.9.45:jar" level="project" />
     <orderEntry type="library" name="sbt: org.roaringbitmap:shims:0.9.45:jar" level="project" />
     <orderEntry type="library" name="sbt: org.rocksdb:rocksdbjni:8.3.2:jar" level="project" />
@@ -169,6 +171,7 @@
     <orderEntry type="library" name="sbt: org.slf4j:slf4j-api:2.0.7:jar" level="project" />
     <orderEntry type="library" name="sbt: org.threeten:threeten-extra:1.7.1:jar" level="project" />
     <orderEntry type="library" name="sbt: org.tukaani:xz:1.9:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.webjars.bower:plotly.js:1.54.1:jar" level="project" />
     <orderEntry type="library" name="sbt: org.xerial.snappy:snappy-java:1.1.10.5:jar" level="project" />
     <orderEntry type="library" name="sbt: oro:oro:2.0.8:jar" level="project" />
   </component>

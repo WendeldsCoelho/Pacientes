@@ -24,9 +24,11 @@ object Main extends App {
     .withColumnRenamed("Duração do tratamento (dias)", "duracao")
     .withColumnRenamed("Data de início", "dataInicio")
 
+  dfRenomeado.printSchema()
+
   // Chamando a análise da primeira questão
-  // questao1.run(dfRenomeado)
-  // questao2.run(dfRenomeado)
+  //questao1.run(dfRenomeado)
+   questao2.run(dfRenomeado)
   // questao3.run(dfRenomeado)
   // questao4.run(dfRenomeado)
   // questao5.run(dfRenomeado)
