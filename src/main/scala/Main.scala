@@ -21,6 +21,7 @@ object Main extends App {
     .withColumnRenamed("Diagnóstico", "diagnostico")
     .withColumnRenamed("Tratamento", "tratamento")
     .withColumnRenamed("Idade", "idade")
+    .withColumnRenamed("Médico responsável", "medico")
     .withColumnRenamed("Duração do tratamento (dias)", "duracao")
     .withColumnRenamed("Data de início", "dataInicio")
 
@@ -28,8 +29,8 @@ object Main extends App {
 
   // Chamando a análise da primeira questão
   //questao1.run(dfRenomeado)
-   questao2.run(dfRenomeado)
-  // questao3.run(dfRenomeado)
+  //questao2.run(dfRenomeado)
+   questao3.run(dfRenomeado)
   // questao4.run(dfRenomeado)
   // questao5.run(dfRenomeado)
   // questao6.run(dfRenomeado)
