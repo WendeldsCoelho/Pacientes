@@ -24,15 +24,14 @@ object questao3 {
     )
 
     // Configurar layout do gráfico
-    val layout = Layout(
-      title = "Proporção de Duração de Tratamentos Longos (> 30 dias)",
-      xaxis = Axis().withTitle("Tratamento"),
-      yaxis = Axis().withTitle("Duração Total (dias)"),
-      margin = Margin(120, 45, 120, 150), // Margens ajustadas
-      height = 700, // Aumenta a altura do gráfico
-      width = 500,  // Reduz a largura do gráfico
-      bargap = 0.2  // Define o espaçamento entre barras para deixá-las mais finas
-    )
+    val layout = Layout()
+      .withTitle("Proporção de Duração de Tratamentos Longos (> 30 dias)")
+      .withXaxis(Axis().withTitle("Tratamento"))
+      .withYaxis(Axis().withTitle("Duração Total (dias)"))
+      .withMargin(Margin(120, 45, 120, 150))  // Margens ajustadas
+      .withHeight(700)  // Aumenta a altura do gráfico
+      .withWidth(500)   // Reduz a largura do gráfico
+      .withBargap(0.2)  // Define o espaçamento entre barras para deixá-las mais finas
 
     // Gerar e salvar o gráfico
     val caminhoArquivo = "tratamentos_longos_proporcao_vertical.html"

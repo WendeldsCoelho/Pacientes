@@ -25,15 +25,16 @@ object questao1 {
 
     // Configurar layout do gráfico usando encadeamento
     // Configurar layout do gráfico com ajustes visuais
-    val layout = Layout(
-      title = "Atendimentos - Fisioterapia (> 60 Anos)",
-      xaxis = Axis()
-        .withTitle("Nome dos Pacientes")
-        .withTickangle(-45) // Rota os rótulos do eixo X em -45 graus
-        .withTickfont(Font(size = 10)), // Reduz o tamanho da fonte dos rótulos
-      yaxis = Axis().withTitle("Atendimentos"),
-      margin = Margin(60, 30, 50, 100) // Margens: esquerda, direita, superior, inferior
-    )
+    val layout = Layout()
+      .withTitle("Atendimentos - Fisioterapia (> 60 Anos)")
+      .withXaxis(
+        Axis()
+          .withTitle("Nome dos Pacientes")
+          .withTickangle(-45) // Rota os rótulos do eixo X em -45 graus
+          .withTickfont(Font().withSize(10)) // Reduz o tamanho da fonte dos rótulos
+      )
+      .withYaxis(Axis().withTitle("Atendimentos"))
+      .withMargin(Margin(60, 30, 50, 100))  // Margens: esquerda, direita, superior, inferior
 
     // Gerar e salvar o gráfico
     val caminhoArquivo = "grafico_fisioterapia.html"
