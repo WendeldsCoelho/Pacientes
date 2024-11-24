@@ -12,7 +12,7 @@ object Main extends App {
     .format("csv")
     .option("header", "true")
     .option("inferSchema", "true")
-    .load("pacientes.csv")
+    .load("paciente_1000.csv")
 
   // Renomeando as colunas para facilitar o acesso
   val dfRenomeado = dfAtendimentos
@@ -29,14 +29,15 @@ object Main extends App {
 
   // Chamando a análise da primeira questão
  // questao1.run(dfRenomeado)
-  questao2.run(dfRenomeado)
+ // questao2.run(dfRenomeado)
   // questao3.run(dfRenomeado)
- //  questao4.run(dfRenomeado) // questao5.run(dfRenomeado)
-//   questao6.run(dfRenomeado)
+  //questao4.run(dfRenomeado)
+  // questao5.run(dfRenomeado)
+  //questao6.run(dfRenomeado)
 //   questao7.run(dfRenomeado)
 //   questao8.run(dfRenomeado)
 //   questao9.run(dfRenomeado)
-//   questao10.run(dfRenomeado)
+   questao10.run(dfRenomeado)
 
   // Parando o SparkSession
   spark.stop()

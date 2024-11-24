@@ -7,35 +7,60 @@ import plotly.Plotly
 
 object questao4 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Calcula a média de idade
+    // Calcula a média da idade
     val mediaIdade = dfRenomeado
-      .agg(round(avg("idade"), 2).as("mediaIdade"))
-      .collect()(0).getDouble(0)
+      .agg(avg("idade").as("mediaIdade"))
+      .collect()
+      .head
+      .getDouble(0)
 
-    // Dados do gráfico (exemplo para uma linha simples com apenas um ponto)
-    val xValues = Seq("Média de Idade") // Eixo X com uma categoria
-    val yValues = Seq(mediaIdade)  // Média calculada no eixo Y
+    // Adiciona coluna de desvio absoluto para calcular o desvio médio
+    val dfComDesvios = dfRenomeado.withColumn(
+      "desvioAbsoluto",
+      abs(col("idade") - lit(mediaIdade))
+    )
 
-    // Cria o gráfico de linha
-    val grafico = Scatter()
-      .withX(xValues)
-      .withY(yValues)
-      //.withMode(ScatterMode.Lines) // Apenas linhas
-      //.withLine(Line().withColor("blue").withWidth(2))   // Configuração da linha
-      .withName("Média de Idade")
+    // Calcula desvio médio e desvio padrão
+    val estatisticas = dfComDesvios
+      .agg(
+        round(avg("desvioAbsoluto"), 2).as("desvioMedio"),
+        round(stddev("idade"), 2).as("desvioPadrao")
+      )
+      .collect()
+      .head
 
-    // Layout personalizado
+    val desvioMedio = estatisticas.getDouble(0)
+    val desvioPadrao = estatisticas.getDouble(1)
+
+    // Exibe os resultados no console
+    println(f"Média de idade: $mediaIdade%.2f")
+    println(f"Desvio médio: $desvioMedio%.2f")
+    println(f"Desvio padrão: $desvioPadrao%.2f")
+
+    // Dados para o gráfico
+    val grafico = Bar(
+      x = Seq("Média", "Desvio Padrão", "Desvio Médio"),
+      y = Seq(mediaIdade, desvioPadrao, desvioMedio)
+    )
+
+    // Layout do gráfico
     val layout = Layout()
-      .withTitle("Média de Idade dos Pacientes")
-      .withXaxis(Axis().withTitle("Categoria"))
-      .withYaxis(Axis().withTitle("Idade Média"))
-      .withPlot_bgcolor(Color.RGBA(245, 245, 245, 1.0)) // Cor de fundo cinza claro
+      .withTitle("Estatísticas da Idade dos Pacientes")
+      .withXaxis(Axis().withTitle("Métricas"))
+      .withYaxis(Axis().withTitle("Valor (anos)"))
 
     // Gera o gráfico em um arquivo HTML
+    val caminhoArquivo = "grafico_estatisticas_idade.html"
     Plotly.plot(
-      path = "media_idade_linha.html",
+      path = caminhoArquivo,
       traces = Seq(grafico),
-      layout = layout
+      layout = layout,
+      config = Config(),
+      useCdn = true,
+      openInBrowser = true,
+      addSuffixIfExists = true
     )
+
+    println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
   }
 }

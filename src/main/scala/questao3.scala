@@ -4,50 +4,62 @@ import plotly._
 import plotly.element._
 import plotly.layout._
 import plotly.Plotly
+
 object questao3 {
-  def run(df: DataFrame): Unit = {
-    // Filtrar tratamentos com duração superior a 30 dias e calcular duração total
-    val tratamentosLongos = df
+  def run(dfRenomeado: DataFrame): Unit = {
+    // Filtra tratamentos longos (duração > 30 dias)
+    val tratamentosLongos = dfRenomeado
       .filter(col("duracao") > 30)
-      .groupBy(col("tratamento"))
-      .agg(sum(col("duracao")).alias("Duração Total (dias)"))
+      .select("atendimento", "tratamento", "duracao", "medico")
 
-    // Coletar dados para o gráfico
-    val dados = tratamentosLongos.collect()
-    val tratamentos: Seq[String] = dados.map(_.getString(0))      // Nome do tratamento
-    val duracoesTotais: Seq[Double] = dados.map(_.getLong(1).toDouble) // Duração total convertida para Double
+    // Extrair dados necessários para o gráfico
+    // Usando collect e map para extrair os dados sem utilizar encoders explícitos
+    val ids: Seq[String] = tratamentosLongos.select("atendimento").collect().map(row => row.get(0).toString)
 
-    // Criar gráfico de barras
-    val grafico = Bar(
-      x = tratamentos,    // Tipos de tratamento no eixo X
-      y = duracoesTotais  // Duração total no eixo Y
+    // Acesso da coluna "duracao" com a conversão adequada para Double
+    val duracoes: Seq[Double] = tratamentosLongos.select("duracao").collect().map(row =>
+      row.get(0) match {
+        case v: Int => v.toDouble   // Se for inteiro, converte para Double
+        case v: Double => v        // Se já for Double, apenas retorna
+        case _ => 0.0              // Caso contrário, assume 0.0 (ou outro valor default)
+      }
     )
 
-    // Configurar layout do gráfico
-    val layout = Layout()
-      .withTitle("Proporção de Duração de Tratamentos Longos (> 30 dias)")
-      .withXaxis(Axis().withTitle("Tratamento"))
-      .withYaxis(Axis().withTitle("Duração Total (dias)"))
-      .withMargin(Margin(120, 45, 120, 150))  // Margens ajustadas
-      .withHeight(700)  // Aumenta a altura do gráfico
-      .withWidth(500)   // Reduz a largura do gráfico
-      .withBargap(0.2)  // Define o espaçamento entre barras para deixá-las mais finas
+    // Cria o gráfico de linha
+    val grafico = Scatter()
+      .withX(ids)                       // IDs dos atendimentos no eixo X (Sequência)
+      .withY(duracoes)                  // Duração dos tratamentos no eixo Y (Sequência)
+      .withName("Duração dos Tratamentos")
 
-    // Gerar e salvar o gráfico
-    val caminhoArquivo = "tratamentos_longos_proporcao_vertical.html"
+    // Layout ajustado
+    val layout = Layout()
+      .withTitle("Duração de Tratamentos Longos (> 30 Dias)")
+      .withXaxis(
+        Axis()
+          .withTitle("ID do Atendimento")
+          .withTickangle(45) // Inclinação dos rótulos do eixo X para melhor leitura
+      )
+      .withYaxis(
+        Axis()
+          .withTitle("Duração (dias)")
+          .withGridcolor(Color.RGBA(200, 200, 200, 0.5)) // Linhas de grade no eixo Y
+      )
+      .withPlot_bgcolor(Color.RGBA(245, 245, 245, 1.0)) // Cor de fundo cinza claro
+      .withMargin(
+        Margin(l = 40, r = 30, t = 50, b = 100) // Margens ajustadas para labels inclinados
+      )
+
+    // Gera o gráfico em um arquivo HTML
+    val caminhoArquivo = "tratamentos_longos_linha.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(grafico),
-      layout = layout,
-      config = Config(),
-      useCdn = true,
-      openInBrowser = true,
-      addSuffixIfExists = true
+      layout = layout
     )
 
-    // Exibir tabela no console
-    tratamentosLongos.show(false)
+    println(s"Gráfico gerado com sucesso: $caminhoArquivo")
 
-    println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
+    // Exibe os tratamentos longos no console
+    tratamentosLongos.show(truncate = false)
   }
 }
