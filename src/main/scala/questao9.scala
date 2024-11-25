@@ -10,7 +10,7 @@ object questao9 {
     // Agrupar os diagnósticos e calcular o custo médio
     val custos = dfRenomeado
       .groupBy("diagnostico")
-      .agg(round(avg("Custo do tratamento"), 2).as("custoMedio"))
+      .agg(round(avg("custoTratamento"), 2).as("custoMedio"))
       .orderBy(col("custoMedio").desc)
       .collect()
 

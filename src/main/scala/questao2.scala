@@ -50,8 +50,11 @@ object questao2 {
           .withTitle("Valor (R$)")
       )
       .withMargin(
-        Margin(60, 30, 50, 100) // Ajusta as margens
+        Margin(60, 60, 50, 60) // Ajusta as margens
       )
+      .withWidth(600)
+      .withHeight(500)
+
 
     // Gerar e salvar o gráfico
     val caminhoArquivo = "grafico_estatisticas_custo.html"

@@ -33,9 +33,9 @@ object questao4 {
     val desvioPadrao = estatisticas.getDouble(1)
 
     // Exibe os resultados no console
-    println(f"Média de idade: $mediaIdade%.2f")
-    println(f"Desvio médio: $desvioMedio%.2f")
-    println(f"Desvio padrão: $desvioPadrao%.2f")
+//    println(f"Média de idade: $mediaIdade%.2f")
+//    println(f"Desvio médio: $desvioMedio%.2f")
+//    println(f"Desvio padrão: $desvioPadrao%.2f")
 
     // Dados para o gráfico
     val grafico = Bar(

@@ -52,6 +52,8 @@ object questao8 {
       .withMargin(
         Margin(60, 30, 50, 100) // Ajusta as margens
       )
+      .withWidth(600)
+      .withHeight(500)
 
     // Gerar e salvar o gráfico
     val caminhoArquivo = "grafico_estatisticas_duracao.html"
