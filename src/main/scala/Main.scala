@@ -26,8 +26,6 @@ object Main extends App {
     .withColumnRenamed("Data de início", "dataInicio")
     .withColumnRenamed("Custo do tratamento", "custoTratamento")
 
-  dfRenomeado.printSchema()
-
   //Chamando a análise da sua escolha.
   // questao1.run(dfRenomeado)
   // questao2.run(dfRenomeado)

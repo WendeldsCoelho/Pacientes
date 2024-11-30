@@ -35,6 +35,7 @@ object questao10 {
     )
       .withText(quantidades.map(_.toString)) // Adiciona rótulos com valores
       .withTextposition(BarTextPosition.Outside) // Mostra os valores fora das barras
+      .withMarker(Marker().withColor(Color.RGBA(255, 165, 0, 0.7)))
 
     // Layout do gráfico
     val layout = Layout()
@@ -47,6 +48,7 @@ object questao10 {
         Axis()
           .withTitle("Número de Pacientes")
       )
+
 
     // Gerar e salvar o gráfico
     val caminhoArquivo = "distribuicao_faixas_bar.html"

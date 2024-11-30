@@ -7,39 +7,47 @@ import plotly.Plotly
 
 object questao1 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Filtrar dados de pacientes acima de 60 anos que receberam "Fisioterapia"
-    val resultado = dfRenomeado
-      .filter(col("idade") > 60 && col("tratamento") === "Fisioterapia")
-      .select("atendimento", "nomePaciente", "diagnostico")
-      .collect()
+    // Filtrar pacientes com idade > 60
+     val dfFiltrado = dfRenomeado
+      .filter(col("idade") > 60)
 
-    // Converter resultados para Seq
-    val atendimentos: Seq[String] = resultado.map(_.getInt(0).toString).toSeq // Eixo X
-    val diagnosticos: Seq[String] = resultado.map(_.getString(2)).toSeq      // Eixo Y
+    val dfFiltradoTerminal = dfRenomeado
+      .filter(col("idade") > 60 &&col("tratamento") === "Fisioterapia")
+      .select("atendimento", "nomePaciente", "diagnostico")
+      .show(false)
+
+    // Agrupar por tratamento e contar a quantidade de pacientes
+    val resultadoColetado = dfFiltrado
+      .groupBy("tratamento")
+      .agg(count("tratamento").alias("quantidade_pacientes"))
+      .collect()
+      .map(row => (row.getAs[String]("tratamento"), row.getAs[Long]("quantidade_pacientes")))
+
+    // Converter para sequências
+    val tratamentos = resultadoColetado.map(_._1).toSeq          // Tratamentos
+    val quantidades = resultadoColetado.map(_._2.toDouble).toSeq // Quantidade de pacientes
 
     // Criar o gráfico de barras
-    val grafico = Bar(
-      x = atendimentos,   // Eixo X: IDs dos atendimentos
-      y = diagnosticos    // Eixo Y: Diagnósticos
-    )
+    val trace = Bar(
+      x = tratamentos,
+      y = quantidades
+    ).withName("Pacientes por Tratamento")
+       .withMarker(Marker().withColor(Color.RGBA(0, 0, 139, 0.7))) // violeta translúcido
+
 
     // Configurar layout do gráfico
     val layout = Layout()
-      .withTitle("Diagnósticos por Atendimento")
-      .withXaxis(
-        Axis()
-          .withTitle("Atendimentos")
-          .withTickangle(-45)
-          .withTickfont(Font().withSize(10))
-      )
-      .withYaxis(Axis().withTitle("Diagnósticos"))
+      .withTitle("Quantidade de Pacientes (> 60 anos) por Tratamento")
+      .withXaxis(Axis().withTitle("Tratamentos"))
+      .withYaxis(Axis().withTitle("Quantidade de Pacientes"))
       .withMargin(Margin(60, 30, 50, 100))
+      .withShowlegend(false)
 
-    // Gerar e salvar o gráfico
-    val caminhoArquivo = "grafico_diagnosticos_por_atendimento.html"
+    // Plotar e salvar o gráfico
+    val caminhoArquivo = "grafico_pacientes_por_tratamento_idade_maior_60.html"
     Plotly.plot(
       path = caminhoArquivo,
-      traces = Seq(grafico),
+      traces = Seq(trace),
       layout = layout,
       config = Config(),
       useCdn = true,
@@ -50,31 +58,3 @@ object questao1 {
     println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
   }
 }
-//
-//import org.apache.spark.sql.DataFrame
-//import org.apache.spark.sql.functions._
-//
-//object questao1 {
-//  def run(dfRenomeado: DataFrame): Unit = {
-//    // Filtrar dados de pacientes acima de 60 anos que receberam "Fisioterapia"
-//    val resultado = dfRenomeado
-//      .filter(col("idade") > 60 && col("tratamento") === "Fisioterapia")
-//      .select("atendimento", "nomePaciente", "diagnostico")
-//      .show(Int.MaxValue, truncate = false)
-    //val todosOsResultados = resultado.collect()
-    //todosOsResultados.foreach(println)
-
-//    // Mostrar os dados formatados no console
-//    println("Atendimentos de pacientes > 60 anos que receberam Fisioterapia:")
-//    resultado.show(truncate = false)
-//
-//    // Caso precise salvar como CSV para análise posterior
-//    val caminhoArquivo = "resultados_fisioterapia.csv"
-//    resultado
-//      .write
-//      .option("header", "true")
-//      .csv(caminhoArquivo)
-//
-//    println(s"Resultados salvos em: $caminhoArquivo")
-//  }
-//}

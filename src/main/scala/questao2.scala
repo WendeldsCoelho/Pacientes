@@ -4,70 +4,64 @@ import plotly._
 import plotly.element._
 import plotly.layout._
 import plotly.Plotly
+import plotly.element.BarTextPosition.Outside
+import plotly.element.Error.Data
 
-object questao2 {
+object questao2{
   def run(dfRenomeado: DataFrame): Unit = {
     // Calcular a média do custo
+    // Calcular a média do custo
     val mediaCusto = dfRenomeado
-      .select(avg(col("Custo do tratamento")).as("mediaCusto"))
+      .agg(avg("custoTratamento").alias("mediaCusto"))
       .collect()
       .head
       .getDouble(0)
 
-    // Adicionar a coluna da diferença absoluta em relação à média para calcular o desvio médio
+    // Adicionar a coluna de diferença absoluta em relação à média para calcular o desvio médio
     val dfComDesvios = dfRenomeado.withColumn(
       "desvioAbsoluto",
-      abs(col("Custo do tratamento") - lit(mediaCusto))
+      abs(col("custoTratamento") - lit(mediaCusto))
     )
 
-    // Calcular o desvio médio e o desvio padrão
-    val estatisticas = dfComDesvios
-      .agg(
-        round(avg(col("desvioAbsoluto")), 2).as("desvioMedio"),
-        round(stddev(col("Custo do tratamento")), 2).as("desvioPadrao")
-      )
+    // Calcular o desvio médio
+    val desvioMedio = dfComDesvios
+      .agg(round(avg(col("desvioAbsoluto")), 2).as("desvioMedio"))
       .collect()
       .head
+      .getDouble(0)
 
-    val desvioMedio = estatisticas.getDouble(0)
-    val desvioPadrao = estatisticas.getDouble(1)
-
-    // Criar o gráfico de barras com os três valores
-    val grafico = Bar(
-      x = Seq("Média", "Desvio Padrão", "Desvio Médio"), // Rótulos do eixo X
-      y = Seq(mediaCusto, desvioPadrao, desvioMedio)     // Valores correspondentes
-    )
+    // Criar o gráfico de barras com erro representando o desvio médio
+    val traceMedia = Bar(
+      x = Seq("custoTratamento"),
+      y = Seq(mediaCusto)
+    ).withName("Média do Custo")
+      .withError_y(
+        Data(
+          array = Seq(desvioMedio),  // Passando o desvio diretamente como sequência
+          visible = true
+        )
+      )
 
     // Layout do gráfico
     val layout = Layout()
-      .withTitle("Estatísticas do Custo do Tratamento")
-      .withXaxis(
-        Axis()
-          .withTitle("Métricas")
-      )
-      .withYaxis(
-        Axis()
-          .withTitle("Valor (R$)")
-      )
-      .withMargin(
-        Margin(60, 60, 50, 60) // Ajusta as margens
-      )
+      .withTitle("Média do Custo do Tratamento com Desvio Médio")
+      .withXaxis(Axis().withTitle("Tratamento"))
+      .withYaxis(Axis().withTitle("Valor (R$)"))
+      .withMargin(Margin(60, 60, 50, 60))
       .withWidth(600)
       .withHeight(500)
 
-
     // Gerar e salvar o gráfico
-    val caminhoArquivo = "grafico_estatisticas_custo.html"
+    val caminhoArquivo = "grafico_media_custo_com_desvio.html"
     Plotly.plot(
-      path = caminhoArquivo,           // Caminho do arquivo de saída
-      traces = Seq(grafico),           // Gráfico com as três métricas
-      layout = layout,                 // Layout configurado
-      config = Config(),               // Configuração padrão
-      useCdn = true,                   // Usar CDN para carregar bibliotecas
-      openInBrowser = true,            // Abre automaticamente no navegador
-      addSuffixIfExists = true         // Adiciona sufixo se o arquivo já existir
+      path = caminhoArquivo,
+      traces = Seq(traceMedia),
+      layout = layout,
+      config = Config(),
+      useCdn = true,
+      openInBrowser = true,
+      addSuffixIfExists = true
     )
 
-    println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
   }
 }
