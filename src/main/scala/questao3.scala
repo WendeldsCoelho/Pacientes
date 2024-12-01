@@ -34,13 +34,14 @@ object questao3 {
     // Configurar layout do gráfico
     val layout = Layout()
       .withTitle("Quantidade de Pacientes por Tratamento (> 30 Dias)")
-      .withXaxis(Axis().withTitle("Tratamentos").withTickangle(45))
+      .withXaxis(Axis().withTitle("Tratamentos").withTickangle(45).withAutomargin(true))
       .withYaxis(Axis().withTitle("Quantidade de Pacientes"))
-      .withMargin(Margin(60, 30, 50, 100))
+      .withHeight(800)
+      .withMargin(Margin(60, 30, 100, 100))
       .withShowlegend(false)
 
     // Plotar e salvar o gráfico
-    val caminhoArquivo = "grafico_pacientes_por_tratamento.html"
+    val caminhoArquivo = "Q3_grafico_pacientes_por_tratamento.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(trace),

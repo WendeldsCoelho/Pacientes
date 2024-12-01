@@ -58,7 +58,7 @@ object questao8 {
       .withHeight(500)
 
     // Salvamento do gráfico
-    val caminhoArquivo = "grafico_media_duracao_com_desvio.html"
+    val caminhoArquivo = "Q8_grafico_media_duracao_com_desvio.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(traceMedia),

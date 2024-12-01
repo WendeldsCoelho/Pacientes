@@ -4,17 +4,19 @@ import plotly._
 import plotly.element._
 import plotly.layout._
 import plotly.Plotly
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 object questao5 {
   def run(dfRenomeado: DataFrame): Unit = {
+    // Obter a data atual como String no formato "yyyy-MM-dd"
+    val dataReferencia = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
     // Adiciona coluna calculada com a data final estimada do tratamento
     val dfComDataFim = dfRenomeado.withColumn(
       "data_fim_estimada",
       expr("date_add(dataInicio, duracao)")
     )
-
-    // Definição da data referência
-    val dataReferencia = "2024-02-25"
 
     // Filtragem dos tratamentos em andamento com base na data de referência
     val tratamentosAtivos = dfComDataFim
@@ -43,14 +45,14 @@ object questao5 {
 
     // Layout do gráfico
     val layout = Layout()
-      .withTitle("Casos Ativos por Médico (Após 2024-03-25)")
+      .withTitle(s"Casos Ativos por Médico (Após $dataReferencia)")
       .withXaxis(Axis().withTitle("Médico").withTickangle(45))
       .withYaxis(Axis().withTitle("Quantidade de Casos"))
       .withMargin(Margin(60, 30, 50, 100))
       .withShowlegend(false)
 
     // Salvamento do gráfico em arquivo HTML
-    val caminhoArquivo = "casos_ativos_por_medico.html"
+    val caminhoArquivo = "Q5_casos_ativos_por_medico.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(trace),

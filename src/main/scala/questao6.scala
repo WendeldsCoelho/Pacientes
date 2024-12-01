@@ -39,7 +39,7 @@ object questao6 {
       .withShowlegend(false)
 
     // Salvamento do gráfico
-    val caminhoArquivo = "grafico_pacientes_por_diagnostico.html"
+    val caminhoArquivo = "Q6_grafico_pacientes_por_diagnostico.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(trace),

@@ -44,7 +44,7 @@ object questao1 {
       .withShowlegend(false)
 
     // Salvamento do gráfico
-    val caminhoArquivo = "grafico_pacientes_por_tratamento_idade_maior_60.html"
+    val caminhoArquivo = "Q1_grafico_pacientes_por_tratamento_idade_maior_60.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(trace),

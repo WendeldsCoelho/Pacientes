@@ -48,10 +48,14 @@ object questao10 {
         Axis()
           .withTitle("Número de Pacientes")
       )
+      .withMargin(
+        Margin(100, 50, 50, 50) 
+      )
+
 
 
     // Salvamento do gráfico
-    val caminhoArquivo = "distribuicao_faixas_bar.html"
+    val caminhoArquivo = "Q10_distribuicao_faixas_bar.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(grafico),

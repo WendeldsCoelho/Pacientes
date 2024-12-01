@@ -10,6 +10,7 @@ import plotly.element.Error.Data
 object questao2{
   def run(dfRenomeado: DataFrame): Unit = {
     // Calcular a média do custo do tratamento
+
     val mediaCusto = dfRenomeado
       .agg(avg("custoTratamento").alias("mediaCusto"))
       .collect()
@@ -51,7 +52,7 @@ object questao2{
       .withHeight(500)
 
     // Salvamento do gráfico
-    val caminhoArquivo = "grafico_media_custo_com_desvio.html"
+    val caminhoArquivo = "Q2_grafico_media_custo_com_desvio.html"
     Plotly.plot(
       path = caminhoArquivo,
       traces = Seq(traceMedia),

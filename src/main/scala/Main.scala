@@ -25,6 +25,7 @@ object  Main extends App {
     .withColumnRenamed("Data de início", "dataInicio")
     .withColumnRenamed("Custo do tratamento", "custoTratamento")
 
+
   //Chamando a análise da sua escolha.
     //questao1.run(dfRenomeado)
     //questao2.run(dfRenomeado)
@@ -34,8 +35,8 @@ object  Main extends App {
     //questao6.run(dfRenomeado)
     //questao7.run(dfRenomeado)
     //questao8.run(dfRenomeado)
-    questao9.run(dfRenomeado)
-   //questao10.run(dfRenomeado)
+    //questao9.run(dfRenomeado)
+    //questao10.run(dfRenomeado)
 
   // Parando o SparkSession
   spark.stop()
