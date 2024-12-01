@@ -16,34 +16,34 @@ object questao7 {
 
     // Nova consulta: comparar custo total entre todos os médicos
     val resultadoColetado = dfRenomeado
-      .groupBy("medico")                           // Agrupa por médico
-      .agg(round(sum("CustoTratamento"), 2).as("custoTotal")) // Soma o custo por médico
+      .groupBy("medico")
+      .agg(round(sum("CustoTratamento"), 2).as("custoTotal"))
       .collect()
       .map(row => (row.getAs[String]("medico"), row.getAs[Double]("custoTotal")))
 
-    // Converter para sequências para o gráfico
-    val medicos = resultadoColetado.map(_._1).toSeq      // Nomes dos médicos
-    val custosTotais = resultadoColetado.map(_._2).toSeq // Custos totais
+    // Converção para sequências para o gráfico
+    val medicos = resultadoColetado.map(_._1).toSeq
+    val custosTotais = resultadoColetado.map(_._2).toSeq
 
-    // Criar o gráfico de barras
+    // Criação do gráfico
     val trace = Bar(
       x = medicos,
       y = custosTotais
     ).withName("Custo Total por Médico")
-      .withMarker(Marker().withColor(Color.RGBA(255, 69, 0, 0.7))) // Vermelho translúcido
+      .withMarker(Marker().withColor(Color.RGBA(255, 69, 0, 0.7)))
 
-    // Configurar layout do gráfico
+    // Layout do gráfico
     val layout = Layout()
       .withTitle("Comparação de Custo Total por Médico")
       .withXaxis(Axis()
         .withTitle("Médicos")
-        .withTickangle(-45) // Rótulos inclinados para melhor visualização
+        .withTickangle(-45)
       )
       .withYaxis(Axis().withTitle("Custo Total (R$)"))
       .withMargin(Margin(60, 30, 50, 100))
       .withShowlegend(false)
 
-    // Plotar e salvar o gráfico
+    // Salvamento do gráfico
     val caminhoArquivo = "grafico_custo_total_por_medico.html"
     Plotly.plot(
       path = caminhoArquivo,

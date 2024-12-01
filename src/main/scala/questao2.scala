@@ -9,8 +9,7 @@ import plotly.element.Error.Data
 
 object questao2{
   def run(dfRenomeado: DataFrame): Unit = {
-    // Calcular a média do custo
-    // Calcular a média do custo
+    // Calcular a média do custo do tratamento
     val mediaCusto = dfRenomeado
       .agg(avg("custoTratamento").alias("mediaCusto"))
       .collect()
@@ -23,21 +22,21 @@ object questao2{
       abs(col("custoTratamento") - lit(mediaCusto))
     )
 
-    // Calcular o desvio médio
+    // Cálculo do desvio médio
     val desvioMedio = dfComDesvios
       .agg(round(avg(col("desvioAbsoluto")), 2).as("desvioMedio"))
       .collect()
       .head
       .getDouble(0)
 
-    // Criar o gráfico de barras com erro representando o desvio médio
+    // Criação do gráfico
     val traceMedia = Bar(
       x = Seq("custoTratamento"),
       y = Seq(mediaCusto)
     ).withName("Média do Custo")
       .withError_y(
         Data(
-          array = Seq(desvioMedio),  // Passando o desvio diretamente como sequência
+          array = Seq(desvioMedio),
           visible = true
         )
       )
@@ -51,7 +50,7 @@ object questao2{
       .withWidth(600)
       .withHeight(500)
 
-    // Gerar e salvar o gráfico
+    // Salvamento do gráfico
     val caminhoArquivo = "grafico_media_custo_com_desvio.html"
     Plotly.plot(
       path = caminhoArquivo,

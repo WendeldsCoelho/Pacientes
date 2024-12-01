@@ -1,13 +1,12 @@
 import org.apache.spark.sql.SparkSession
 
-object Main extends App {
+object  Main extends App {
   // Criação do SparkSession
   val spark = SparkSession.builder()
     .appName("Pacientes")
-    .master("local")  // Definido para rodar localmente
+    .master("local")
     .getOrCreate()
 
-  // Carregando o CSV com a inferência de schema
   val dfAtendimentos = spark.read
     .format("csv")
     .option("header", "true")
@@ -27,16 +26,16 @@ object Main extends App {
     .withColumnRenamed("Custo do tratamento", "custoTratamento")
 
   //Chamando a análise da sua escolha.
-  // questao1.run(dfRenomeado)
-  // questao2.run(dfRenomeado)
-  // questao3.run(dfRenomeado)
-  // questao4.run(dfRenomeado)
-  // questao5.run(dfRenomeado)
-  // questao6.run(dfRenomeado)
-  // questao7.run(dfRenomeado)
-  // questao8.run(dfRenomeado)
-  // questao9.run(dfRenomeado)
-   questao10.run(dfRenomeado)
+    //questao1.run(dfRenomeado)
+    //questao2.run(dfRenomeado)
+    //questao3.run(dfRenomeado)
+    //questao4.run(dfRenomeado)
+    //questao5.run(dfRenomeado)
+    //questao6.run(dfRenomeado)
+    //questao7.run(dfRenomeado)
+    //questao8.run(dfRenomeado)
+    questao9.run(dfRenomeado)
+   //questao10.run(dfRenomeado)
 
   // Parando o SparkSession
   spark.stop()

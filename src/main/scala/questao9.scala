@@ -4,39 +4,71 @@ import plotly._
 import plotly.element._
 import plotly.layout._
 import plotly.Plotly
+import plotly.element.Error.Data
 
 object questao9 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Agrupar os diagnósticos e calcular o custo médio
-    val custos = dfRenomeado
+    // Custo médio por diágostico com desvio padrão
+    val custosPorDiagnostico = dfRenomeado
       .groupBy("diagnostico")
-      .agg(round(avg("custoTratamento"), 2).as("custoMedio"))
-      .orderBy(col("custoMedio").desc)
-      .collect()
+      .agg(
+        avg(col("custoTratamento")).alias("custo_medio"),
+        stddev(col("custoTratamento")).alias("desvio_padrao")
+      )
+      .orderBy(col("custo_medio").desc)
 
-    // Extrair diagnósticos e valores para o gráfico
-    val diagnosticos = custos.map(_.getString(0)).toSeq // Converter para Seq
-    val valores = custos.map(_.getDouble(1)).toSeq      // Converter para Seq
-
-    // Criar o gráfico de barras
-    val grafico = Bar(
-      x = diagnosticos,
-      y = valores
+    // Dados para o gráfico
+    val diagnosticosColeta = custosPorDiagnostico.collect().map(row =>
+      (
+        row.getAs[String]("diagnostico"),
+        row.getAs[Double]("custo_medio"),
+        row.getAs[Double]("desvio_padrao")
+      )
     )
 
-    // Layout do gráfico
+    // Extração de dados para o gráfico
+    val diagnosticos = diagnosticosColeta.map(row => row._1)
+    val custoMedio = diagnosticosColeta.map(row => row._2)
+    val desvio = diagnosticosColeta.map(row => row._3)
+
+    // Criação do gráfico
+    val trace = Bar(
+      x = diagnosticos.toSeq,
+      y = custoMedio.toSeq
+    ).withName("Customédio")
+      .withError_y(
+        Data(
+          array = desvio
+        )
+          .withVisible(true)
+      )
+      .withMarker(
+        Marker().withColor(Color.RGBA(100, 149, 237, 0.6))
+      )
+
     val layout = Layout()
-      .withTitle("Comparação de Custos Médios por Diagnóstico")
-      .withXaxis(Axis().withTitle("Diagnóstico"))
-      .withYaxis(Axis().withTitle("Custo Médio (R$)"))
+      .withTitle("Custo Médio por Diagnóstico com Desvio Padrão")
+      .withXaxis(Axis()
+        .withTitle("Diagnóstico"))
+      .withYaxis(Axis()
+        .withTitle("Custo Médio (R$)"))
+      .withShowlegend(false)
 
-    // Gerar o gráfico
+    // Salvamento do gráfico
+    val caminhoArquivo = "grafico_custo_medio_por_diagnostico.html"
     Plotly.plot(
-      path = "comparacao_custos.html",
-      traces = Seq(grafico),
-      layout = layout
+      path = caminhoArquivo,
+      traces = Seq(trace),
+      layout = layout,
+      config = Config(),
+      useCdn = true,
+      openInBrowser = true,
+      addSuffixIfExists = true
     )
 
-    println("Gráfico de comparação de custos salvo como comparacao_custos.html.")
+    println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
+
+    // Exibição dos resultados
+    custosPorDiagnostico.show(false)
   }
 }

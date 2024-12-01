@@ -7,29 +7,30 @@ import plotly.Plotly
 
 object questao6 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Agrupar por diagnóstico e contar a quantidade de pacientes
-    val resultadoTerminal = dfRenomeado
+    // Consulta original: Agrupar por diagnóstico e contar a quantidade de pacientes
+//    val resultadoTerminal = dfRenomeado
 //      .filter(col("diagnostico") === "Hipertensão")
 //      .select("atendimento", "nomePaciente", "tratamento", "custoTratamento")
 //      .show(Int.MaxValue, truncate = false)
+//    Nova consulta: Quantidade de Pacientes por Diagnóstico
     val resultadoColetado = dfRenomeado
       .groupBy("diagnostico")
       .agg(count("diagnostico").alias("quantidade_pacientes"))
       .collect()
       .map(row => (row.getAs[String]("diagnostico"), row.getAs[Long]("quantidade_pacientes")))
 
-    // Converter para sequências
-    val diagnosticos = resultadoColetado.map(_._1).toSeq         // Diagnósticos
-    val quantidades = resultadoColetado.map(_._2.toDouble).toSeq // Quantidade de pacientes
+    // Converção para sequências
+    val diagnosticos = resultadoColetado.map(_._1).toSeq
+    val quantidades = resultadoColetado.map(_._2.toDouble).toSeq
 
-    // Criar o gráfico de barras
+    // Criação do gráfico
     val trace = Bar(
       x = diagnosticos,
       y = quantidades
     ).withName("Pacientes por Diagnóstico")
-      .withMarker(Marker().withColor(Color.RGBA(0, 0, 139, 0.7))) // violeta translúcido
+      .withMarker(Marker().withColor(Color.RGBA(0, 0, 139, 0.7)))
 
-    // Configurar layout do gráfico
+    // Layout do gráfico
     val layout = Layout()
       .withTitle("Quantidade de Pacientes por Diagnóstico")
       .withXaxis(Axis().withTitle("Diagnóstico"))
@@ -37,7 +38,7 @@ object questao6 {
       .withMargin(Margin(60, 30, 50, 100))
       .withShowlegend(false)
 
-    // Plotar e salvar o gráfico
+    // Salvamento do gráfico
     val caminhoArquivo = "grafico_pacientes_por_diagnostico.html"
     Plotly.plot(
       path = caminhoArquivo,

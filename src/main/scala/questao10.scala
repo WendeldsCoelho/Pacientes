@@ -7,7 +7,7 @@ import plotly.Plotly
 
 object questao10 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Adicionar coluna de faixa etária
+    // Adição da coluna de faixa etária
     val dfFaixas = dfRenomeado
       .withColumn(
         "faixa_etaria",
@@ -17,24 +17,24 @@ object questao10 {
           .otherwise("60+")
       )
 
-    // Contar pacientes por faixa etária
+    // Contagem de pacientes por faixa etária
     val faixas = dfFaixas
       .groupBy("faixa_etaria")
       .count()
       .orderBy("faixa_etaria")
       .collect()
 
-    // Extrair faixas etárias e quantidades
-    val faixasEtarias = faixas.map(_.getString(0)).toSeq // Converter para Seq[String]
-    val quantidades = faixas.map(_.getLong(1)).toSeq     // Converter para Seq[Long]
+    // Extraição de faixas etárias e quantidades
+    val faixasEtarias = faixas.map(_.getString(0)).toSeq
+    val quantidades = faixas.map(_.getLong(1)).toSeq
 
-    // Criar o gráfico de barras
+    // Criação do gráfico
     val grafico = Bar(
-      x = faixasEtarias, // Faixas etárias no eixo X
-      y = quantidades    // Quantidades no eixo Y
+      x = faixasEtarias,
+      y = quantidades
     )
-      .withText(quantidades.map(_.toString)) // Adiciona rótulos com valores
-      .withTextposition(BarTextPosition.Outside) // Mostra os valores fora das barras
+      .withText(quantidades.map(_.toString))
+      .withTextposition(BarTextPosition.Outside)
       .withMarker(Marker().withColor(Color.RGBA(255, 165, 0, 0.7)))
 
     // Layout do gráfico
@@ -50,16 +50,16 @@ object questao10 {
       )
 
 
-    // Gerar e salvar o gráfico
+    // Salvamento do gráfico
     val caminhoArquivo = "distribuicao_faixas_bar.html"
     Plotly.plot(
-      path = caminhoArquivo,           // Caminho do arquivo de saída
-      traces = Seq(grafico),           // Gráfico de barras
-      layout = layout,                 // Layout configurado
-      config = Config(),               // Configuração padrão
-      useCdn = true,                   // Usar CDN para carregar bibliotecas
-      openInBrowser = true,            // Abre automaticamente no navegador
-      addSuffixIfExists = true         // Adiciona sufixo se o arquivo já existir
+      path = caminhoArquivo,
+      traces = Seq(grafico),
+      layout = layout,
+      config = Config(),
+      useCdn = true,
+      openInBrowser = true,
+      addSuffixIfExists = true
     )
 
     println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")

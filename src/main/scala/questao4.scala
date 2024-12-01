@@ -21,26 +21,26 @@ object questao4 {
       abs(col("idade") - lit(mediaIdade))
     )
 
-    // Calcula o desvio médio
+    // Cálculo do desvio médio
     val desvioMedio = dfComDesvios
       .agg(round(avg("desvioAbsoluto"), 2).as("desvioMedio"))
       .collect()
       .head
       .getDouble(0)
 
-    // Cria o gráfico de barras com erro representando o desvio médio
+    // Criação do gráfico
     val traceMedia = Bar(
       x = Seq("Idade Média"),
       y = Seq(mediaIdade)
     ).withName("Média da Idade")
       .withError_y(
         Data(
-          array = Seq(desvioMedio),  // Representando o desvio médio como erro
+          array = Seq(desvioMedio),
           visible = true
         )
       )
       .withMarker(
-        Marker().withColor(Color.RGBA(70, 130, 180, 0.8)) // Azul translúcido
+        Marker().withColor(Color.RGBA(70, 130, 180, 0.8))
       )
 
     // Layout do gráfico
@@ -52,7 +52,7 @@ object questao4 {
       .withWidth(600)
       .withHeight(500)
 
-    // Gerar e salvar o gráfico
+    // Salvamnto do gráfico
     val caminhoArquivo = "grafico_media_idade_com_desvio.html"
     Plotly.plot(
       path = caminhoArquivo,

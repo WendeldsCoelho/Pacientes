@@ -21,22 +21,22 @@ object questao8 {
       abs(col("duracao") - lit(mediaDuracao))
     )
 
-    // Calcular o desvio médio
+    // Cálculo do desvio médio
     val desvioMedio = dfComDesvios
       .agg(round(avg(col("desvioAbsoluto")), 2).as("desvioMedio"))
       .collect()
       .head
       .getDouble(0)
 
-    // Criar o gráfico de barras com erro representando o desvio médio
+    // Criação do gráfico
     val traceMedia = Bar(
-      x = Seq("Duração dos Tratamentos"),  // Nome da categoria
-      y = Seq(mediaDuracao)                // Valor da média
+      x = Seq("Duração dos Tratamentos"),
+      y = Seq(mediaDuracao)
     ).withName("Média da Duração")
       .withError_y(
         Data(
-          array = Seq(desvioMedio),        // Desvio médio como erro
-          visible = true                   // Tornar o erro visível
+          array = Seq(desvioMedio),
+          visible = true
         )
       )
 
@@ -57,16 +57,16 @@ object questao8 {
       .withWidth(600)
       .withHeight(500)
 
-    // Gerar e salvar o gráfico
+    // Salvamento do gráfico
     val caminhoArquivo = "grafico_media_duracao_com_desvio.html"
     Plotly.plot(
       path = caminhoArquivo,
-      traces = Seq(traceMedia),           // Usar o gráfico com erro
-      layout = layout,                    // Layout configurado
-      config = Config(),                  // Configuração padrão
-      useCdn = true,                      // Usar CDN para carregar bibliotecas
-      openInBrowser = true,               // Abre automaticamente no navegador
-      addSuffixIfExists = true            // Adiciona sufixo se o arquivo já existir
+      traces = Seq(traceMedia),
+      layout = layout,
+      config = Config(),
+      useCdn = true,
+      openInBrowser = true,
+      addSuffixIfExists = true
     )
 
     println(s"Gráfico salvo e aberto no navegador: $caminhoArquivo")
