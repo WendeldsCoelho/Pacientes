@@ -7,12 +7,12 @@ import plotly.Plotly
 
 object questao3 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Consulta original: Agrupar por tratamento e contar a quantidade de pacientes com duração > 30 dias
+    // Consulta original: Contar a quantidade de pacientes com duração > 30 dias
 //    val resultadoTerminal = dfRenomeado
 //      .filter(col("duracao") > 30)
 //      .select("atendimento", "tratamento", "duracao", "medico")
 //      .show(Int.MaxValue, truncate = false)
-//    Nova consulta: Quantidade de Pacientes por Tratamento (> 30 dias)
+//    Nova consulta: Quantidade de Pacientes por Tratamento (duração > 30 dias)
     val resultadoColetado = dfRenomeado
       .filter(col("duracao") > 30)
       .groupBy("tratamento")
