@@ -7,7 +7,7 @@ import plotly.Plotly
 
 object questao6 {
   def run(dfRenomeado: DataFrame): Unit = {
-    // Consulta original: Agrupar por diagnóstico e contar a quantidade de pacientes
+    // Consulta original: Contar a quantidade de pacientes com diagnóstico de "Hipertensão"
 //    val resultadoTerminal = dfRenomeado
 //      .filter(col("diagnostico") === "Hipertensão")
 //      .select("atendimento", "nomePaciente", "tratamento", "custoTratamento")
