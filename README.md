@@ -16,7 +16,7 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
 - **IDE (foi utilizada o IntelliJ)**: Ambiente de Desenvolvimento compatível com o uso do scala.
 
 ### Arquivo Build.sbt:
-    ```scala
+    
     name := "Pacientes"
 
     version := "0.1"
@@ -26,7 +26,7 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
     libraryDependencies += "org.apache.spark" %% "spark-core" % "3.5.3"
     libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.5.3"
     libraryDependencies += "org.plotly-scala" %% "plotly-render" % "0.8.4"
-    ```
+
     ### Passo a Passo de instalação(Utilizando o IntelliJ)
 
     1. Instalação do Scala e sbt Executor: 
@@ -36,9 +36,9 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
     3. Clonagem do repositório:
     Clone este repositório para sua máquina com o comando: 
     
-    ```bash
+    
     git clone https://github.com/WendeldsCoelho/Pacientes.git.
-    ```
+    
 
 3. Manipulação dos dados:
     Aqui estarão as 10 analises feitas a partir da base dados e das perguntas disponibilizadas pelo professor juntamente com nossa analise dos dados.
