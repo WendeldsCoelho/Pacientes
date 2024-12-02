@@ -13,7 +13,7 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
 - **Apache Spark(3.5.3)**: Framework de processamento distribuído que permite manipular grandes volumes de dados de forma eficiente.
 - **Plotly(0.8.4)**: Biblioteca para criação de gráficos e visualizações interativas.
 - **JDK (11)**: Versão específica da JDK que é compatível com o scala.
-- **IDE (foi utilizada o IntelliJ)**: Ambiente de Desenvolvimento compatível com o uso do scala.
+- **IDE (foi utilizado o IntelliJ)**: Ambiente de Desenvolvimento compatível com o uso do scala.
 
 ### Arquivo Build.sbt:
 
