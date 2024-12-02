@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Distribuição de Pacientes por Faixa Etária</title>
+<script src="https://cdn.plot.ly/plotly-1.54.1.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+(function () {
+  var data0 = {"x":["0-18","19-30","31-60","60+"],"y":[68.0,136.0,412.0,384.0],"textposition":"outside","type":"bar","marker":{"color":"rgba(255, 165, 0, 0.7)"},"text":["68","136","412","384"]};
+
+  var data = [data0];
+  var layout = {"margin":{"t":50,"b":50,"l":100,"r":50},"title":"Distribuição de Pacientes por Faixa Etária","yaxis":{"title":"Número de Pacientes"},"xaxis":{"title":"Faixa Etária"}};
+ var config = {};
+
+  Plotly.plot('chart', data, layout, config);
+})();
+</script>
+</body>
+</html>
+       

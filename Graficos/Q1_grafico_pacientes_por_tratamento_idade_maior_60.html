@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Quantidade de Pacientes (> 60 anos) por Tratamento</title>
+<script src="https://cdn.plot.ly/plotly-1.54.1.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+(function () {
+  var data0 = {"x":["Imobilização","Cirurgia","Repouso","Mudança de estilo de vida","Implante de marcapasso","Reposição","Medicação","Fisioterapia"],"name":"Pacientes por Tratamento","y":[28.0,61.0,18.0,29.0,36.0,35.0,121.0,56.0],"type":"bar","marker":{"color":"rgba(0, 0, 139, 0.7)"}};
+
+  var data = [data0];
+  var layout = {"margin":{"t":50,"b":100,"l":60,"r":30},"title":"Quantidade de Pacientes (> 60 anos) por Tratamento","yaxis":{"title":"Quantidade de Pacientes"},"xaxis":{"title":"Tratamentos"},"showlegend":false};
+ var config = {};
+
+  Plotly.plot('chart', data, layout, config);
+})();
+</script>
+</body>
+</html>
+       

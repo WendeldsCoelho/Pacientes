@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Comparação de Custo Total por Médico</title>
+<script src="https://cdn.plot.ly/plotly-1.54.1.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+(function () {
+  var data0 = {"x":["Dr. Pedro","Dr. Roberto","Dr. João","Dra. Ana","Dra. Clara","Dr. Carlos"],"name":"Custo Total por Médico","y":[590553.15,960149.38,579496.17,929842.12,436662.19,843283.0],"type":"bar","marker":{"color":"rgba(255, 69, 0, 0.7)"}};
+
+  var data = [data0];
+  var layout = {"margin":{"t":50,"b":100,"l":60,"r":30},"title":"Comparação de Custo Total por Médico","yaxis":{"title":"Custo Total (R$)"},"xaxis":{"tickangle":-45.0,"title":"Médicos"},"showlegend":false};
+ var config = {};
+
+  Plotly.plot('chart', data, layout, config);
+})();
+</script>
+</body>
+</html>
+       

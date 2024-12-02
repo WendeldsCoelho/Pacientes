@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Média de Idade dos Pacientes com Desvio Médio</title>
+<script src="https://cdn.plot.ly/plotly-1.54.1.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+(function () {
+  var data0 = {"x":["Idade Média"],"name":"Média da Idade","y":[52.076],"type":"bar","marker":{"color":"rgba(70, 130, 180, 0.8)"},"error_y":{"visible":true,"array":[18.83],"type":"data"}};
+
+  var data = [data0];
+  var layout = {"height":500,"margin":{"t":50,"b":60,"l":60,"r":60},"title":"Média de Idade dos Pacientes com Desvio Médio","yaxis":{"title":"Idade (anos)"},"xaxis":{"title":"Métrica"},"width":600};
+ var config = {};
+
+  Plotly.plot('chart', data, layout, config);
+})();
+</script>
+</body>
+</html>
+       

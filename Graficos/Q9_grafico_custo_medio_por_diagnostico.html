@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Custo Médio por Diagnóstico com Desvio Padrão</title>
+<script src="https://cdn.plot.ly/plotly-1.54.1.min.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+(function () {
+  var data0 = {"x":["Arritmia","Fratura","Infarto","Luxação","Artrite","Hipertensão"],"name":"Customédio","y":[10768.669714285721,6475.545297297297,4776.396341463416,1552.747897727273,879.558441558441,448.13904109589026],"type":"bar","marker":{"color":"rgba(100, 149, 237, 0.6)"},"error_y":{"visible":true,"array":[11253.471267083863,6785.1730370363475,6505.738922326097,683.9705739231025,456.0712982016156,241.2130280473338],"type":"data"}};
+
+  var data = [data0];
+  var layout = {"title":"Custo Médio por Diagnóstico com Desvio Padrão","yaxis":{"title":"Custo Médio (R$)"},"xaxis":{"title":"Diagnóstico"},"showlegend":false};
+ var config = {};
+
+  Plotly.plot('chart', data, layout, config);
+})();
+</script>
+</body>
+</html>
+       
