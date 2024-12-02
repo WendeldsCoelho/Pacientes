@@ -16,6 +16,7 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
 - **IDE (foi utilizada o IntelliJ)**: Ambiente de Desenvolvimento compatível com o uso do scala.
 
 ### Arquivo Build.sbt:
+
 ```scala
     name := "Pacientes"
 
@@ -26,7 +27,9 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
     libraryDependencies += "org.apache.spark" %% "spark-core" % "3.5.3"
     libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.5.3"
     libraryDependencies += "org.plotly-scala" %% "plotly-render" % "0.8.4"
+
 ```
+
 ### Passo a Passo de instalação(Utilizando o IntelliJ)
 
 1. Instalação do Scala e sbt Executor: 
@@ -34,16 +37,17 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
 2. Configuração da JDK:
    Configure a JDK para a Versão 11, caso não possua essa Versão ela pode ser baixada diretamente pela IDE.
 3. Clonagem do repositório:
-   Clone este repositório para sua máquina com o comando: 
-    ```bash
+   Clone este repositório para sua máquina com o comando:
+   
+```bash
     git clone https://github.com/WendeldsCoelho/Pacientes.git.
-    
+```
 
-3. Manipulação dos dados:
-    Aqui estarão as 10 analises feitas a partir da base dados e das perguntas disponibilizadas pelo professor juntamente com nossa analise dos dados.
+## 3. Manipulação dos dados:
 
-    Observação: 
-        Os nomes da colunas foram modificados no Main afim de facilitar a utilização em código
+Aqui estarão as 10 analises feitas a partir da base dados e das perguntas disponibilizadas pelo professor juntamente com nossa analise dos dados.
+Observação: 
+     Os nomes da colunas foram modificados no Main afim de facilitar a utilização em código
    
    ```scala
         val dfRenomeado = dfAtendimentos
@@ -58,10 +62,10 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
         .withColumnRenamed("Custo do tratamento", "custoTratamento")
    ```
    
-    3.1 Questão 1: Pacientes de idade avançada com tratamento específico: Liste todos os atendimentos de pacientes com mais de 60 anos que receberam tratamento “Fisioterapia”. Exiba o ID do atendimento, o nome do paciente e o diagnóstico.
+3.1 Questão 1: Pacientes de idade avançada com tratamento específico: Liste todos os atendimentos de pacientes com mais de 60 anos que receberam tratamento “Fisioterapia”. Exiba o ID do atendimento, o nome do paciente e o diagnóstico.
     A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de tratamento "Fisioterapia" e passando a mostrar todos os pacientes acima de 60 anos agrupados por tratamento.
    
-    ```scala 
+```scala 
     // Consulta original: Filtrar pacientes com idade > 60 e tratamento de Fisioterapia
     //val dfFiltradoTerminal = dfRenomeado
     //  .filter(col("idade") > 60 &&col("tratamento") === "Fisioterapia")
@@ -77,11 +81,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
         .agg(count("tratamento").alias("quantidade_pacientes"))
         .collect()
         .map(row => (row.getAs[String]("tratamento"), row.getAs[Long]("quantidade_pacientes")))
-    ```
+```
     
-    3.2 Questão 2: Média de custo de tratamento: Calcule a média do custo de todos os tratamentos realizados. Exiba apenas o valor da média
+3.2 Questão 2: Média de custo de tratamento: Calcule a média do custo de todos os tratamentos realizados. Exiba apenas o valor da média
     Nesta questão, foi adicionado o desvio médio para complementar na análise da média.   
-    ```scala
+    
+```scala
     // Calcular a média do custo do tratamento
     val mediaCusto = dfRenomeado
       .agg(avg("custoTratamento").alias("mediaCusto"))
@@ -100,10 +105,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .collect()
       .head
       .getDouble(0)
-    ```
-    3.3 Questão 3: Tratamentos longos: Selecione todos os tratamentos com duração superior a 30 dias. Exiba o ID do atendimento, o tratamento, a duração e o médico responsável.
+ ```
+    
+3.3 Questão 3: Tratamentos longos: Selecione todos os tratamentos com duração superior a 30 dias. Exiba o ID do atendimento, o tratamento, a duração e o médico responsável.
     A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, agrupando os pacientes por tratamento ao invés de mostrar a quantidade total em conjunto.
-    ```scala
+    
+```scala
     // Consulta original: Contar a quantidade de pacientes com duração > 30 dias
     //    val resultadoTerminal = dfRenomeado
     //      .filter(col("duracao") > 30)
@@ -116,10 +123,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .agg(count("tratamento").alias("quantidade_pacientes"))
       .collect()
       .map(row => (row.getAs[String]("tratamento"), row.getAs[Long]("quantidade_pacientes")))
-    ```
-    3.4 Questão 4: Média de idade dos pacientes: Calcule a média de idade dos pacientes atendidos. Exiba apenas o valor da média.
+```
+    
+3.4 Questão 4: Média de idade dos pacientes: Calcule a média de idade dos pacientes atendidos. Exiba apenas o valor da média.
     Nesta questão, foi adicionado o desvio médio para complementar na análise da média.
-    ```scala
+    
+```scala
       // Calcula a média da idade
         val mediaIdade = dfRenomeado
       .agg(avg("idade").alias("mediaIdade"))
@@ -139,10 +148,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .collect()
       .head
       .getDouble(0)
-    ```
-    3.5 Questão 5: Pacientes em tratamento ativo: Filtre todos os atendimentos cujo tratamento ainda esteja em andamento (A data atual é menor que a data de início acrescida da duração do tratamento). Exiba o ID do atendimento, o nome do paciente, o diagnóstico e o médico responsável.
+```
+    
+3.5 Questão 5: Pacientes em tratamento ativo: Filtre todos os atendimentos cujo tratamento ainda esteja em andamento (A data atual é menor que a data de início acrescida da duração do tratamento). Exiba o ID do atendimento, o nome do paciente, o diagnóstico e o médico responsável.
     Nesta questão, nós utilizamos o método LocalDate.now() para capturar a data atual e usá-la de referência para a exibição dos tratamentos em andamento.
-    ```scala
+    
+```scala
     // Obter a data atual como String no formato "yyyy-MM-dd"
     val dataReferencia = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
@@ -161,10 +172,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .groupBy("medico")
       .agg(count("atendimento").alias("quantidade_casos"))
       .orderBy(desc("quantidade_casos"))
-    ```
-    3.6 Questão 6: Atendimentos de um diagnóstico específico: Selecione todos os atendimentos com diagnóstico de “Hipertensão”. Exiba o ID do atendimento, o paciente, o tratamento e o custo
+   ```
+    
+3.6 Questão 6: Atendimentos de um diagnóstico específico: Selecione todos os atendimentos com diagnóstico de “Hipertensão”. Exiba o ID do atendimento, o paciente, o tratamento e o custo
     A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de diagnóstico e agrupando todos os pacientes por diagnóstico.    
-    ```scala
+    
+```scala
     // Consulta original: Contar a quantidade de pacientes com diagnóstico de "Hipertensão"
     //    val resultadoTerminal = dfRenomeado
     //      .filter(col("diagnostico") === "Hipertensão")
@@ -176,12 +189,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .agg(count("diagnostico").alias("quantidade_pacientes"))
       .collect()
       .map(row => (row.getAs[String]("diagnostico"), row.getAs[Long]("quantidade_pacientes")))
-    ```
-    3.7 Questão 7:Custo total de tratamentos de um médico específico: Calcule o custo total dos tratamentos administrados pelo médico “Dr. Silva”. Exiba apenas o valor do custo total.
+```
+3.7 Questão 7:Custo total de tratamentos de um médico específico: Calcule o custo total dos tratamentos administrados pelo médico “Dr. Silva”. Exiba apenas o valor do custo total.
     
-    A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de médico "Dr. Silva" e mostrando o custo total por médico.
+A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de médico "Dr. Silva" e mostrando o custo total por médico.
     
-    ```scala
+```scala
     // Consulta original: calcular o custo total do "Dr. Silva"
     //    dfRenomeado
     //      .filter(col("medico") === "Dr. Silva")
@@ -195,13 +208,13 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .agg(round(sum("CustoTratamento"), 2).as("custoTotal"))
       .collect()
       .map(row => (row.getAs[String]("medico"), row.getAs[Double]("custoTotal")))
-    ```
+```
     
-    3.8 Questão 8:Duração média de todos os tratamentos: Calcule a duração média de todos os tratamentos em dias. Exiba apenas o valor da média.
+3.8 Questão 8:Duração média de todos os tratamentos: Calcule a duração média de todos os tratamentos em dias. Exiba apenas o valor da média.
     
-    Nesta questão, foi adicionado o desvio médio para complementar na análise da média.
+Nesta questão, foi adicionado o desvio médio para complementar na análise da média.
     
-    ```scala
+```scala
     val mediaDuracao = dfRenomeado
       .agg(avg(col("duracao")).as("mediaDuracao"))
       .collect()
@@ -220,12 +233,12 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
       .collect()
       .head
       .getDouble(0)
-      ```
+```
 
-    3.9 Questão 9:Comparação de custos entre diferentes diagnósticos: Quais diagnósticos geram os tratamentos mais caros ou baratos?
+3.9 Questão 9:Comparação de custos entre diferentes diagnósticos: Quais diagnósticos geram os tratamentos mais caros ou baratos?
     Nesta questão, foi adicionado o desvio padrão para complementar na análise da média.
 
-        ```scala
+```scala
         // Custo médio por diágostico com desvio padrão
         val custosPorDiagnostico = dfRenomeado
           .groupBy("diagnostico")
@@ -234,10 +247,11 @@ Complementando, o Plotly permite criar visualizações interativas e intuitivas,
             stddev(col("custoTratamento")).alias("desvio_padrao")
           )
           .orderBy(col("custo_medio").desc)
-    
-    3.10 Questão 10: Distribuição de pacientes por faixa etária: Qual faixa etária (0-18, 19-30, 31-60, 60+) é mais frequente nas consultas?
+```
+3.10 Questão 10: Distribuição de pacientes por faixa etária: Qual faixa etária (0-18, 19-30, 31-60, 60+) é mais frequente nas consultas?
     Nesta questão, foram adicionadas as divisões por faixa etária para a exibição em gráfico.
-   ```scala
+    
+```scala
         // Adição da coluna de faixa etária
         val dfFaixas = dfRenomeado
           .withColumn(
