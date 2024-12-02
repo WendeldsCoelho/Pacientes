@@ -82,7 +82,8 @@ Observação:
         .collect()
         .map(row => (row.getAs[String]("tratamento"), row.getAs[Long]("quantidade_pacientes")))
 ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q1_grafico_pacientes_por_tratamento_idade_maior_60.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q1_grafico_pacientes_por_tratamento_idade_maior_60.png)
+
 3.2 Questão 2: Média de custo de tratamento: Calcule a média do custo de todos os tratamentos realizados. Exiba apenas o valor da média
     Nesta questão, foi adicionado o desvio médio para complementar na análise da média.   
     
@@ -106,7 +107,8 @@ Observação:
       .head
       .getDouble(0)
  ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q2_grafico_media_custo_com_desvio.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q2_grafico_media_custo_com_desvio.png)
+
 3.3 Questão 3: Tratamentos longos: Selecione todos os tratamentos com duração superior a 30 dias. Exiba o ID do atendimento, o tratamento, a duração e o médico responsável.
     A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, agrupando os pacientes por tratamento ao invés de mostrar a quantidade total em conjunto.
     
@@ -124,7 +126,8 @@ Observação:
       .collect()
       .map(row => (row.getAs[String]("tratamento"), row.getAs[Long]("quantidade_pacientes")))
 ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q3_grafico_pacientes_por_tratamento.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q3_grafico_pacientes_por_tratamento.png)
+
 3.4 Questão 4: Média de idade dos pacientes: Calcule a média de idade dos pacientes atendidos. Exiba apenas o valor da média.
     Nesta questão, foi adicionado o desvio médio para complementar na análise da média.
     
@@ -149,7 +152,8 @@ Observação:
       .head
       .getDouble(0)
 ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q4_grafico_media_idade_com_desvio.html)| [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q4_grafico_media_idade_com_desvio.png)
+
 3.5 Questão 5: Pacientes em tratamento ativo: Filtre todos os atendimentos cujo tratamento ainda esteja em andamento (A data atual é menor que a data de início acrescida da duração do tratamento). Exiba o ID do atendimento, o nome do paciente, o diagnóstico e o médico responsável.
     Nesta questão, nós utilizamos o método LocalDate.now() para capturar a data atual e usá-la de referência para a exibição dos tratamentos em andamento.
     
@@ -173,7 +177,8 @@ Observação:
       .agg(count("atendimento").alias("quantidade_casos"))
       .orderBy(desc("quantidade_casos"))
    ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q5_casos_ativos_por_medico.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q5_casos_ativos_por_medico.png)
+
 3.6 Questão 6: Atendimentos de um diagnóstico específico: Selecione todos os atendimentos com diagnóstico de “Hipertensão”. Exiba o ID do atendimento, o paciente, o tratamento e o custo
     A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de diagnóstico e agrupando todos os pacientes por diagnóstico.    
     
@@ -190,6 +195,8 @@ Observação:
       .collect()
       .map(row => (row.getAs[String]("diagnostico"), row.getAs[Long]("quantidade_pacientes")))
 ```
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q6_grafico_pacientes_por_diagnostico.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q6_grafico_pacientes_por_diagnostico.png)
+
 3.7 Questão 7:Custo total de tratamentos de um médico específico: Calcule o custo total dos tratamentos administrados pelo médico “Dr. Silva”. Exiba apenas o valor do custo total.
     
 A consulta nesta questão foi alterada para melhorar a exibição em forma de gráfico, sendo retirado o filtro de médico "Dr. Silva" e mostrando o custo total por médico.
@@ -209,7 +216,8 @@ A consulta nesta questão foi alterada para melhorar a exibição em forma de gr
       .collect()
       .map(row => (row.getAs[String]("medico"), row.getAs[Double]("custoTotal")))
 ```
-    
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q7_grafico_custo_total_por_medico.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q7_grafico_custo_total_por_medico.png)
+
 3.8 Questão 8:Duração média de todos os tratamentos: Calcule a duração média de todos os tratamentos em dias. Exiba apenas o valor da média.
     
 Nesta questão, foi adicionado o desvio médio para complementar na análise da média.
@@ -234,6 +242,7 @@ Nesta questão, foi adicionado o desvio médio para complementar na análise da 
       .head
       .getDouble(0)
 ```
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q8_grafico_media_duracao_com_desvio.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q8_grafico_media_duracao_com_desvio.png)
 
 3.9 Questão 9:Comparação de custos entre diferentes diagnósticos: Quais diagnósticos geram os tratamentos mais caros ou baratos?
     Nesta questão, foi adicionado o desvio padrão para complementar na análise da média.
@@ -248,6 +257,9 @@ Nesta questão, foi adicionado o desvio médio para complementar na análise da 
           )
           .orderBy(col("custo_medio").desc)
 ```
+
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q9_grafico_custo_medio_por_diagnostico.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q9_grafico_custo_medio_por_diagnostico.png)
+
 3.10 Questão 10: Distribuição de pacientes por faixa etária: Qual faixa etária (0-18, 19-30, 31-60, 60+) é mais frequente nas consultas?
     Nesta questão, foram adicionadas as divisões por faixa etária para a exibição em gráfico.
     
@@ -268,3 +280,6 @@ Nesta questão, foi adicionado o desvio médio para complementar na análise da 
           .count()
           .orderBy("faixa_etaria")
           .collect()
+```
+
+Gráfico gerado: [HTML](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q10_distribuicao_faixas_bar.html) | [Imagem](https://github.com/WendeldsCoelho/Pacientes/blob/master/Graficos/Q10_distribuicao_faixas_bar.png)
