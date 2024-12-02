@@ -8,11 +8,11 @@ import plotly.Plotly
 object questao7 {
   def run(dfRenomeado: DataFrame): Unit = {
     // Consulta original: calcular o custo total do "Dr. Silva"
-    dfRenomeado
-      .filter(col("medico") === "Dr. Silva")
-      .agg(round(sum("CustoTratamento"), 2).as("custoTotal"))
-      .select("custoTotal")
-      .show(false)
+//    dfRenomeado
+//      .filter(col("medico") === "Dr. Silva")
+//      .agg(round(sum("CustoTratamento"), 2).as("custoTotal"))
+//      .select("custoTotal")
+//      .show(false)
 
     // Nova consulta: comparar custo total entre todos os médicos
     val resultadoColetado = dfRenomeado
